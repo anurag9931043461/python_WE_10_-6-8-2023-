@@ -1,0 +1,49 @@
+Advance editors:
+----------------
+
+Visual studio code; Microsoft
+anaconda
+pycharm.
+-------------------------------
+> variable
+> comment
+> datatypes
+    > int
+    > float 
+    > string
+    > list
+    > tuple
+    > set 
+    > frozenset
+    > dictionary
+    > complex
+    > boolean
+> casting
+> input()
+> operators
+conditional programming:
+    > if else
+    > nested if else
+    > if elif else
+    > nested if elif else
+    > ternary operator
+> loop:
+    > for 
+        > nested for loop
+        > single for loop for pattern
+        > nested for loop for pattern
+        > list comprehension 
+        > dictionary comprehension 
+        > set comprehension
+        > tuple comprehension(exception it generate a generator object)
+    > while
+        > nested while loop
+        > single while loop for pattern
+        > nested whill loop for pattern
+
+> function 
+    > def 
+    > lambda(annonymous function )
+    > decorator
+    > generator
+
