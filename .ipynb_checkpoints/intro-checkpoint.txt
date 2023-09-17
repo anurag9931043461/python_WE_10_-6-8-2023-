@@ -47,3 +47,25 @@ conditional programming:
     > decorator
     > generator
 
+> Multitasking
+> Programming Paradigm
+    > Top line programming
+    > Functional programming/procedural programming
+    > Object Oriented programming (OOPs) 
+> OOPs
+    > class as Blueprint
+        > constructor(def __init__(self)) 
+        > self keyword
+        > instance variable
+        > class variable
+        > static methods.
+        > class methods.
+    > Object
+    > Encapsulation
+    > Inheritance
+    > polymorphism
+    > Abstraction 
+
+
+
+
