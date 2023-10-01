@@ -1,0 +1,19 @@
+DBMS: Database mangement system.
+-----
+
+SQL:
+----  
+	RDBMS: Relational database management system.
+	------
+	Ex: Mysql server--> MySQLAB--> Sunmicrotech--> Oracle
+	    SQL server --> Microsoft
+	    Oracle server
+	    DB2 --> IBM
+	    etc...
+
+NoSQL:
+------
+
+	MongoDB:
+	-------
+
