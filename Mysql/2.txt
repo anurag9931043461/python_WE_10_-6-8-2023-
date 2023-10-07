@@ -1,0 +1,249 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.33 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| wd12               |
+| wd2                |
+| wd5                |
+| wd7                |
+| we10               |
+| we2                |
+| we4                |
+| world              |
++--------------------+
+13 rows in set (0.02 sec)
+
+mysql> use we10;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_we10 |
++----------------+
+| eb             |
++----------------+
+1 row in set (0.01 sec)
+
+mysql> select * from eb;
+Empty set (0.01 sec)
+
+mysql> desc eb;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| AC_no       | int          | YES  |     | NULL    |       |
+| name        | varchar(100) | YES  |     | NULL    |       |
+| bill        | float        | YES  |     | NULL    |       |
+| aadhar_card | int          | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into eb values(8700103696,"Krishna",5000.78,1234567890321);
+ERROR 1264 (22003): Out of range value for column 'AC_no' at row 1
+mysql> alter table eb modify ac_no bigint;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc eb;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| ac_no       | bigint       | YES  |     | NULL    |       |
+| name        | varchar(100) | YES  |     | NULL    |       |
+| bill        | float        | YES  |     | NULL    |       |
+| aadhar_card | int          | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table eb modify aadhar_card bigint;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc eb;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| ac_no       | bigint       | YES  |     | NULL    |       |
+| name        | varchar(100) | YES  |     | NULL    |       |
+| bill        | float        | YES  |     | NULL    |       |
+| aadhar_card | bigint       | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into eb values(8700103696,"Krishna",5000.78,1234567890321);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from eb;
++------------+---------+---------+---------------+
+| ac_no      | name    | bill    | aadhar_card   |
++------------+---------+---------+---------------+
+| 8700103696 | Krishna | 5000.78 | 1234567890321 |
++------------+---------+---------+---------------+
+1 row in set (0.00 sec)
+
+mysql> alter table eb add pencard char(10);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from eb;
++------------+---------+---------+---------------+---------+
+| ac_no      | name    | bill    | aadhar_card   | pencard |
++------------+---------+---------+---------------+---------+
+| 8700103696 | Krishna | 5000.78 | 1234567890321 | NULL    |
++------------+---------+---------+---------------+---------+
+1 row in set (0.00 sec)
+
+mysql> update eb set pencard="EVCPK3245K" where ac_no =8700103696;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from eb;
++------------+---------+---------+---------------+------------+
+| ac_no      | name    | bill    | aadhar_card   | pencard    |
++------------+---------+---------+---------------+------------+
+| 8700103696 | Krishna | 5000.78 | 1234567890321 | EVCPK3245K |
++------------+---------+---------+---------------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into eb values(32423,"a",342,2314234,"DFS34534h"),(46556,"b",4324.543,123143,"DSF45436J");
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from eb;
++------------+---------+---------+---------------+------------+
+| ac_no      | name    | bill    | aadhar_card   | pencard    |
++------------+---------+---------+---------------+------------+
+| 8700103696 | Krishna | 5000.78 | 1234567890321 | EVCPK3245K |
+|      32423 | a       |     342 |       2314234 | DFS34534h  |
+|      46556 | b       | 4324.54 |        123143 | DSF45436J  |
++------------+---------+---------+---------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> update eb set pencard="EVCPK3245K";
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 3  Changed: 2  Warnings: 0
+
+mysql> select * from eb;
++------------+---------+---------+---------------+------------+
+| ac_no      | name    | bill    | aadhar_card   | pencard    |
++------------+---------+---------+---------------+------------+
+| 8700103696 | Krishna | 5000.78 | 1234567890321 | EVCPK3245K |
+|      32423 | a       |     342 |       2314234 | EVCPK3245K |
+|      46556 | b       | 4324.54 |        123143 | EVCPK3245K |
++------------+---------+---------+---------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> -- agg. function min(),max(),count(),distinct(),sum(),avg()
+mysql> insert into eb values(3247623,"c",2000,234314234,"DFS65345h"),(4655326,"d",2000,123143,"DSF32454J");
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from eb;
++------------+---------+---------+---------------+------------+
+| ac_no      | name    | bill    | aadhar_card   | pencard    |
++------------+---------+---------+---------------+------------+
+| 8700103696 | Krishna | 5000.78 | 1234567890321 | EVCPK3245K |
+|      32423 | a       |     342 |       2314234 | EVCPK3245K |
+|      46556 | b       | 4324.54 |        123143 | EVCPK3245K |
+|    3247623 | c       |    2000 |     234314234 | DFS65345h  |
+|    4655326 | d       |    2000 |        123143 | DSF32454J  |
++------------+---------+---------+---------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select sum(bill) from eb;
++-------------------+
+| sum(bill)         |
++-------------------+
+| 13667.32275390625 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(bill) as total_bill from eb;
++-------------------+
+| total_bill        |
++-------------------+
+| 13667.32275390625 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(bill) from eb;
++------------------+
+| avg(bill)        |
++------------------+
+| 2733.46455078125 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select 13667.3227/5;
++---------------+
+| 13667.3227/5  |
++---------------+
+| 2733.46454000 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> 13667.3227/5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '13667.3227/5' at line 1
+mysql> select count(bill) from eb;
++-------------+
+| count(bill) |
++-------------+
+|           5 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select min(bill) from eb;
++-----------+
+| min(bill) |
++-----------+
+|       342 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from eb;
++------------+---------+---------+---------------+------------+
+| ac_no      | name    | bill    | aadhar_card   | pencard    |
++------------+---------+---------+---------------+------------+
+| 8700103696 | Krishna | 5000.78 | 1234567890321 | EVCPK3245K |
+|      32423 | a       |     342 |       2314234 | EVCPK3245K |
+|      46556 | b       | 4324.54 |        123143 | EVCPK3245K |
+|    3247623 | c       |    2000 |     234314234 | DFS65345h  |
+|    4655326 | d       |    2000 |        123143 | DSF32454J  |
++------------+---------+---------+---------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from eb where bill in (select min(bill) from eb);
++-------+------+------+-------------+------------+
+| ac_no | name | bill | aadhar_card | pencard    |
++-------+------+------+-------------+------------+
+| 32423 | a    |  342 |     2314234 | EVCPK3245K |
++-------+------+------+-------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select ac_no,name,aadhar_card, pencard,bill from eb where bill in (select min(bill) from eb);
++-------+------+-------------+------------+------+
+| ac_no | name | aadhar_card | pencard    | bill |
++-------+------+-------------+------------+------+
+| 32423 | a    |     2314234 | EVCPK3245K |  342 |
++-------+------+-------------+------------+------+
+1 row in set (0.00 sec)
+
+mysql>
+
