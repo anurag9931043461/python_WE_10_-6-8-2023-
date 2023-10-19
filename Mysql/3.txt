@@ -1,0 +1,392 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.33 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| wd12               |
+| wd2                |
+| wd5                |
+| wd7                |
+| we10               |
+| we2                |
+| we4                |
+| world              |
++--------------------+
+13 rows in set (0.03 sec)
+
+mysql> use we10;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_we10 |
++----------------+
+| eb             |
++----------------+
+1 row in set (0.01 sec)
+
+mysql> select * from eb;
++------------+---------+---------+---------------+------------+
+| ac_no      | name    | bill    | aadhar_card   | pencard    |
++------------+---------+---------+---------------+------------+
+| 8700103696 | Krishna | 5000.78 | 1234567890321 | EVCPK3245K |
+|      32423 | a       |     342 |       2314234 | EVCPK3245K |
+|      46556 | b       | 4324.54 |        123143 | EVCPK3245K |
+|    3247623 | c       |    2000 |     234314234 | DFS65345h  |
+|    4655326 | d       |    2000 |        123143 | DSF32454J  |
++------------+---------+---------+---------------+------------+
+5 rows in set (0.01 sec)
+
+mysql> -- wildcard, alies,primary key, not null, unique, between , and, or , where,joins(inner join, left,right,full/full outer)
+mysql> create table KI(enrollment int primary key auto_increment, course varchar(50) not null,Fee float not null);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc ki;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| enrollment | int         | NO   | PRI | NULL    | auto_increment |
+| course     | varchar(50) | NO   |     | NULL    |                |
+| Fee        | float       | NO   |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> alter table ki add name varchar(50) not null;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc ki;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| enrollment | int         | NO   | PRI | NULL    | auto_increment |
+| course     | varchar(50) | NO   |     | NULL    |                |
+| Fee        | float       | NO   |     | NULL    |                |
+| name       | varchar(50) | NO   |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into ki values(1,"java",30000.00,"Mr.SS");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into ki values(2,"java",30054.00,"Kritika");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into ki(course,fee,name) values(2,"python",30324.00,"Raushani");
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into ki(course,fee,name) values("python",30324.00,"Raushani");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into ki(course,fee,name) values("Web designing",28888.00,"Tarun");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from ki;
++------------+---------------+-------+----------+
+| enrollment | course        | Fee   | name     |
++------------+---------------+-------+----------+
+|          1 | java          | 30000 | Mr.SS    |
+|          2 | java          | 30054 | Kritika  |
+|          3 | python        | 30324 | Raushani |
+|          4 | Web designing | 28888 | Tarun    |
++------------+---------------+-------+----------+
+4 rows in set (0.00 sec)
+
+mysql> alter table ki modify enrollment bigint;
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into ki values(111111111111,"Eithical hacking",21000,"Dhananjay");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into ki(course,fee,name) values("LFT",2100089,"Sumit");
+ERROR 1364 (HY000): Field 'enrollment' doesn't have a default value
+mysql> alter table ki modify enrollment bigint primary key auto_increment;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> alter table ki modify enrollment bigint auto_increment;
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into ki values(111111111111,"Eithical hacking",21000,"Dhananjay");
+ERROR 1062 (23000): Duplicate entry '111111111111' for key 'ki.PRIMARY'
+mysql> insert into ki(course,fee,name) values("LFT",2100089,"Sumit");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from ki;
++--------------+------------------+---------+-----------+
+| enrollment   | course           | Fee     | name      |
++--------------+------------------+---------+-----------+
+|            1 | java             |   30000 | Mr.SS     |
+|            2 | java             |   30054 | Kritika   |
+|            3 | python           |   30324 | Raushani  |
+|            4 | Web designing    |   28888 | Tarun     |
+| 111111111111 | Eithical hacking |   21000 | Dhananjay |
+| 111111111112 | LFT              | 2100090 | Sumit     |
++--------------+------------------+---------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> create table PG(enroll bigint,room int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into PG values(111111111112,202);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into PG values(4,203);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into PG values(214234324553,203);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from pg;
++--------------+------+
+| enroll       | room |
++--------------+------+
+| 111111111112 |  202 |
+|            4 |  203 |
+| 214234324553 |  203 |
++--------------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from ki;
++--------------+------------------+---------+-----------+
+| enrollment   | course           | Fee     | name      |
++--------------+------------------+---------+-----------+
+|            1 | java             |   30000 | Mr.SS     |
+|            2 | java             |   30054 | Kritika   |
+|            3 | python           |   30324 | Raushani  |
+|            4 | Web designing    |   28888 | Tarun     |
+| 111111111111 | Eithical hacking |   21000 | Dhananjay |
+| 111111111112 | LFT              | 2100090 | Sumit     |
++--------------+------------------+---------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from pg;
++--------------+------+
+| enroll       | room |
++--------------+------+
+| 111111111112 |  202 |
+|            4 |  203 |
+| 214234324553 |  203 |
++--------------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from ki inner join pg on ki.enrollment=pg.enroll;
++--------------+---------------+---------+-------+--------------+------+
+| enrollment   | course        | Fee     | name  | enroll       | room |
++--------------+---------------+---------+-------+--------------+------+
+| 111111111112 | LFT           | 2100090 | Sumit | 111111111112 |  202 |
+|            4 | Web designing |   28888 | Tarun |            4 |  203 |
++--------------+---------------+---------+-------+--------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select ki.enrollment,ki.course,ki.fee,ki.name,pg.room from ki inner join pg on ki.enrollment=pg.enroll;
++--------------+---------------+---------+-------+------+
+| enrollment   | course        | fee     | name  | room |
++--------------+---------------+---------+-------+------+
+| 111111111112 | LFT           | 2100090 | Sumit |  202 |
+|            4 | Web designing |   28888 | Tarun |  203 |
++--------------+---------------+---------+-------+------+
+2 rows in set (0.00 sec)
+
+mysql> alter table ki rename krishna_international
+    -> l
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'l' at line 2
+mysql> alter table ki rename krishna_international;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select ki.enrollment,ki.course,ki.fee,ki.name,pg.room from ki inner join pg on ki.enrollment=pg.enroll;
+ERROR 1146 (42S02): Table 'we10.ki' doesn't exist
+mysql> show tables;
++-----------------------+
+| Tables_in_we10        |
++-----------------------+
+| eb                    |
+| krishna_international |
+| pg                    |
++-----------------------+
+3 rows in set (0.00 sec)
+
+mysql> select ki.enrollment,ki.course,ki.fee,ki.name,pg.room from krishna_international as ki inner join pg on ki.enrollment=pg.enroll;
++--------------+---------------+---------+-------+------+
+| enrollment   | course        | fee     | name  | room |
++--------------+---------------+---------+-------+------+
+| 111111111112 | LFT           | 2100090 | Sumit |  202 |
+|            4 | Web designing |   28888 | Tarun |  203 |
++--------------+---------------+---------+-------+------+
+2 rows in set (0.00 sec)
+
+mysql> select ki.enrollment,ki.course,ki.fee,ki.name,pg.room from krishna_international as ki left join pg on ki.enrollment=pg.enroll;
++--------------+------------------+---------+-----------+------+
+| enrollment   | course           | fee     | name      | room |
++--------------+------------------+---------+-----------+------+
+|            1 | java             |   30000 | Mr.SS     | NULL |
+|            2 | java             |   30054 | Kritika   | NULL |
+|            3 | python           |   30324 | Raushani  | NULL |
+|            4 | Web designing    |   28888 | Tarun     |  203 |
+| 111111111111 | Eithical hacking |   21000 | Dhananjay | NULL |
+| 111111111112 | LFT              | 2100090 | Sumit     |  202 |
++--------------+------------------+---------+-----------+------+
+6 rows in set (0.00 sec)
+
+mysql> select ki.enrollment,ki.course,ki.fee,ki.name,pg.room from krishna_international as ki right join pg on ki.enrollment=pg.enroll;
++--------------+---------------+---------+-------+------+
+| enrollment   | course        | fee     | name  | room |
++--------------+---------------+---------+-------+------+
+| 111111111112 | LFT           | 2100090 | Sumit |  202 |
+|            4 | Web designing |   28888 | Tarun |  203 |
+|         NULL | NULL          |    NULL | NULL  |  203 |
++--------------+---------------+---------+-------+------+
+3 rows in set (0.00 sec)
+
+mysql> select ki.enrollment,ki.course,ki.fee,ki.name,pg.room from krishna_international as ki right join pg on ki.enrollment=pg.enroll union select ki.enrollment,ki.course,ki.fee,ki.name,pg.room from krishna_international as ki left join pg on ki.enrollment =pg.enroll;
++--------------+------------------+---------+-----------+------+
+| enrollment   | course           | fee     | name      | room |
++--------------+------------------+---------+-----------+------+
+| 111111111112 | LFT              | 2100090 | Sumit     |  202 |
+|            4 | Web designing    |   28888 | Tarun     |  203 |
+|         NULL | NULL             |    NULL | NULL      |  203 |
+|            1 | java             |   30000 | Mr.SS     | NULL |
+|            2 | java             |   30054 | Kritika   | NULL |
+|            3 | python           |   30324 | Raushani  | NULL |
+| 111111111111 | Eithical hacking |   21000 | Dhananjay | NULL |
++--------------+------------------+---------+-----------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from krishna_international;
++--------------+------------------+---------+-----------+
+| enrollment   | course           | Fee     | name      |
++--------------+------------------+---------+-----------+
+|            1 | java             |   30000 | Mr.SS     |
+|            2 | java             |   30054 | Kritika   |
+|            3 | python           |   30324 | Raushani  |
+|            4 | Web designing    |   28888 | Tarun     |
+| 111111111111 | Eithical hacking |   21000 | Dhananjay |
+| 111111111112 | LFT              | 2100090 | Sumit     |
++--------------+------------------+---------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> alter table krishna_international rename ki;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from ki;
++--------------+------------------+---------+-----------+
+| enrollment   | course           | Fee     | name      |
++--------------+------------------+---------+-----------+
+|            1 | java             |   30000 | Mr.SS     |
+|            2 | java             |   30054 | Kritika   |
+|            3 | python           |   30324 | Raushani  |
+|            4 | Web designing    |   28888 | Tarun     |
+| 111111111111 | Eithical hacking |   21000 | Dhananjay |
+| 111111111112 | LFT              | 2100090 | Sumit     |
++--------------+------------------+---------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> alter table ki add gst float;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from ki;
++--------------+------------------+---------+-----------+------+
+| enrollment   | course           | Fee     | name      | gst  |
++--------------+------------------+---------+-----------+------+
+|            1 | java             |   30000 | Mr.SS     | NULL |
+|            2 | java             |   30054 | Kritika   | NULL |
+|            3 | python           |   30324 | Raushani  | NULL |
+|            4 | Web designing    |   28888 | Tarun     | NULL |
+| 111111111111 | Eithical hacking |   21000 | Dhananjay | NULL |
+| 111111111112 | LFT              | 2100090 | Sumit     | NULL |
++--------------+------------------+---------+-----------+------+
+6 rows in set (0.00 sec)
+
+mysql> select 100*0.18;
++----------+
+| 100*0.18 |
++----------+
+|    18.00 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select 100+100*0.18;
++--------------+
+| 100+100*0.18 |
++--------------+
+|       118.00 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> update ki set gst= fee+fee*0.18;
+Query OK, 6 rows affected (0.01 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> select * from ki;
++--------------+------------------+---------+-----------+---------+
+| enrollment   | course           | Fee     | name      | gst     |
++--------------+------------------+---------+-----------+---------+
+|            1 | java             |   30000 | Mr.SS     |   35400 |
+|            2 | java             |   30054 | Kritika   | 35463.7 |
+|            3 | python           |   30324 | Raushani  | 35782.3 |
+|            4 | Web designing    |   28888 | Tarun     | 34087.8 |
+| 111111111111 | Eithical hacking |   21000 | Dhananjay |   24780 |
+| 111111111112 | LFT              | 2100090 | Sumit     | 2478100 |
++--------------+------------------+---------+-----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select 30000+30000*0.18;
++------------------+
+| 30000+30000*0.18 |
++------------------+
+|         35400.00 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> update ki set gst=0 where fee<30000;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from ki;
++--------------+------------------+---------+-----------+---------+
+| enrollment   | course           | Fee     | name      | gst     |
++--------------+------------------+---------+-----------+---------+
+|            1 | java             |   30000 | Mr.SS     |   35400 |
+|            2 | java             |   30054 | Kritika   | 35463.7 |
+|            3 | python           |   30324 | Raushani  | 35782.3 |
+|            4 | Web designing    |   28888 | Tarun     |       0 |
+| 111111111111 | Eithical hacking |   21000 | Dhananjay |       0 |
+| 111111111112 | LFT              | 2100090 | Sumit     | 2478100 |
++--------------+------------------+---------+-----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> update ki set gst=fee+fee*0.50 where fee between 28000 and 35000;
+Query OK, 4 rows affected (0.01 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select * from ki;
++--------------+------------------+---------+-----------+---------+
+| enrollment   | course           | Fee     | name      | gst     |
++--------------+------------------+---------+-----------+---------+
+|            1 | java             |   30000 | Mr.SS     |   45000 |
+|            2 | java             |   30054 | Kritika   |   45081 |
+|            3 | python           |   30324 | Raushani  |   45486 |
+|            4 | Web designing    |   28888 | Tarun     |   43332 |
+| 111111111111 | Eithical hacking |   21000 | Dhananjay |       0 |
+| 111111111112 | LFT              | 2100090 | Sumit     | 2478100 |
++--------------+------------------+---------+-----------+---------+
+6 rows in set (0.00 sec)
+
+mysql>

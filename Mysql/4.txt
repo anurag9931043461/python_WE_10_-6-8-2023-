@@ -1,0 +1,331 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.33 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> -- composit key
+mysql> -- foreign key
+mysql> -- date, time , datetime
+mysql> -- curdate(), curtime(), now()
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| wd12               |
+| wd2                |
+| wd5                |
+| wd7                |
+| we10               |
+| we2                |
+| we4                |
+| world              |
++--------------------+
+13 rows in set (0.14 sec)
+
+mysql> use we10;
+Database changed
+mysql> shot tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'shot tables' at line 1
+mysql> show tables;
++----------------+
+| Tables_in_we10 |
++----------------+
+| eb             |
+| ki             |
+| pg             |
++----------------+
+3 rows in set (0.01 sec)
+
+mysql> create table college(sn int primary key,name varchar(50), branch varchar(40));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> insert into college values(1,"a","MCA"),(2,"b","BCA");
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> create table hostel(roll int primary key, room int, foreign key(roll) references college(sn));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into hostel values(1,202),(2,202);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into hostel values(10,203);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`we10`.`hostel`, CONSTRAINT `hostel_ibfk_1` FOREIGN KEY (`roll`) REFERENCES `college` (`sn`))
+mysql> select * from college;
++----+------+--------+
+| sn | name | branch |
++----+------+--------+
+|  1 | a    | MCA    |
+|  2 | b    | BCA    |
++----+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> insert into college values(10,'f',"BCA");
+Query OK, 1 row affected (0.50 sec)
+
+mysql> insert into hostel values(10,203);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> create table counting(name varchar(50),father varchar(50),Mother char(50),address varchar(150), primary key(name,father,mother,address));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc counting;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| name    | varchar(50)  | NO   | PRI | NULL    |       |
+| father  | varchar(50)  | NO   | PRI | NULL    |       |
+| Mother  | char(50)     | NO   | PRI | NULL    |       |
+| address | varchar(150) | NO   | PRI | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into counting values("Krishna","Sunil","Suman","Ballia,UP");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into counting values("Vishnu","Sunil","Suman","Ballia,UP");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into counting values("Krishna","Ram","Sita","Ballia,UP"););
+Query OK, 1 row affected (0.00 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> insert into counting values("Krishna","Ram","Sita","Ballia,UP");
+ERROR 1062 (23000): Duplicate entry 'Krishna-Ram-Sita-Ballia,UP' for key 'counting.PRIMARY'
+mysql> create table timetable(dt date, ti time, datetime datetime);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into timetable values("2023-10-14","11:08:32","2023-10-14 11:08:32");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from timetable;
++------------+----------+---------------------+
+| dt         | ti       | datetime            |
++------------+----------+---------------------+
+| 2023-10-14 | 11:08:32 | 2023-10-14 11:08:32 |
++------------+----------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> insert into timetable values("2023/10/14","11:08:32","2023/10/14 11:08:32");
+Query OK, 1 row affected, 2 warnings (0.01 sec)
+
+mysql> select * from timetable;
++------------+----------+---------------------+
+| dt         | ti       | datetime            |
++------------+----------+---------------------+
+| 2023-10-14 | 11:08:32 | 2023-10-14 11:08:32 |
+| 2023-10-14 | 11:08:32 | 2023-10-14 11:08:32 |
++------------+----------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into timetable values(20231014,110832,20231014110832);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from timetable;
++------------+----------+---------------------+
+| dt         | ti       | datetime            |
++------------+----------+---------------------+
+| 2023-10-14 | 11:08:32 | 2023-10-14 11:08:32 |
+| 2023-10-14 | 11:08:32 | 2023-10-14 11:08:32 |
+| 2023-10-14 | 11:08:32 | 2023-10-14 11:08:32 |
++------------+----------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> -- curdate(), curtime(),now()
+mysql> insert into timetable values(curdate(),curtime(),now());
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from timetable;
++------------+----------+---------------------+
+| dt         | ti       | datetime            |
++------------+----------+---------------------+
+| 2023-10-14 | 11:08:32 | 2023-10-14 11:08:32 |
+| 2023-10-14 | 11:08:32 | 2023-10-14 11:08:32 |
+| 2023-10-14 | 11:08:32 | 2023-10-14 11:08:32 |
+| 2023-10-14 | 11:12:35 | 2023-10-14 11:12:35 |
++------------+----------+---------------------+
+4 rows in set (0.00 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_we10 |
++----------------+
+| college        |
+| counting       |
+| eb             |
+| hostel         |
+| ki             |
+| pg             |
+| timetable      |
++----------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from eb;
++------------+---------+---------+---------------+------------+
+| ac_no      | name    | bill    | aadhar_card   | pencard    |
++------------+---------+---------+---------------+------------+
+| 8700103696 | Krishna | 5000.78 | 1234567890321 | EVCPK3245K |
+|      32423 | a       |     342 |       2314234 | EVCPK3245K |
+|      46556 | b       | 4324.54 |        123143 | EVCPK3245K |
+|    3247623 | c       |    2000 |     234314234 | DFS65345h  |
+|    4655326 | d       |    2000 |        123143 | DSF32454J  |
++------------+---------+---------+---------------+------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from eb where ac_no between 32423 and 4655326;
++---------+------+---------+-------------+------------+
+| ac_no   | name | bill    | aadhar_card | pencard    |
++---------+------+---------+-------------+------------+
+|   32423 | a    |     342 |     2314234 | EVCPK3245K |
+|   46556 | b    | 4324.54 |      123143 | EVCPK3245K |
+| 3247623 | c    |    2000 |   234314234 | DFS65345h  |
+| 4655326 | d    |    2000 |      123143 | DSF32454J  |
++---------+------+---------+-------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from eb where ac_no>=32423 and ac_no<= 4655326;
++---------+------+---------+-------------+------------+
+| ac_no   | name | bill    | aadhar_card | pencard    |
++---------+------+---------+-------------+------------+
+|   32423 | a    |     342 |     2314234 | EVCPK3245K |
+|   46556 | b    | 4324.54 |      123143 | EVCPK3245K |
+| 3247623 | c    |    2000 |   234314234 | DFS65345h  |
+| 4655326 | d    |    2000 |      123143 | DSF32454J  |
++---------+------+---------+-------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from ki;
++--------------+------------------+---------+-----------+---------+
+| enrollment   | course           | Fee     | name      | gst     |
++--------------+------------------+---------+-----------+---------+
+|            1 | java             |   30000 | Mr.SS     |   45000 |
+|            2 | java             |   30054 | Kritika   |   45081 |
+|            3 | python           |   30324 | Raushani  |   45486 |
+|            4 | Web designing    |   28888 | Tarun     |   43332 |
+| 111111111111 | Eithical hacking |   21000 | Dhananjay |       0 |
+| 111111111112 | LFT              | 2100090 | Sumit     | 2478100 |
++--------------+------------------+---------+-----------+---------+
+6 rows in set (0.01 sec)
+
+mysql> select * pg;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'pg' at line 1
+mysql> select * from pg;
++--------------+------+
+| enroll       | room |
++--------------+------+
+| 111111111112 |  202 |
+|            4 |  203 |
+| 214234324553 |  203 |
++--------------+------+
+3 rows in set (0.01 sec)
+
+mysql> create table library(roll int not null, membership varchar(20) not null);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into library values(4,"1 Month"),(214234324553,"2 Months");
+ERROR 1264 (22003): Out of range value for column 'roll' at row 2
+mysql> alter table library modify roll bigint not null;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into library values(4,"1 Month"),(214234324553,"2 Months");
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from ki inner join pg on ki.enrollment=pg.enroll inner join library on ki.enrollment=library.roll;
++------------+---------------+-------+-------+-------+--------+------+------+------------+
+| enrollment | course        | Fee   | name  | gst   | enroll | room | roll | membership |
++------------+---------------+-------+-------+-------+--------+------+------+------------+
+|          4 | Web designing | 28888 | Tarun | 43332 |      4 |  203 |    4 | 1 Month    |
++------------+---------------+-------+-------+-------+--------+------+------+------------+
+1 row in set (0.00 sec)
+
+mysql> select ki.enrollment,ki.course,ki.fee,ki.name,ki.gst, pg.room,lib.membership from ki inner join pg on ki.enrollment=pg.enroll inner join library as lib on ki.enrollment=lib.roll;
++------------+---------------+-------+-------+-------+------+------------+
+| enrollment | course        | fee   | name  | gst   | room | membership |
++------------+---------------+-------+-------+-------+------+------------+
+|          4 | Web designing | 28888 | Tarun | 43332 |  203 | 1 Month    |
++------------+---------------+-------+-------+-------+------+------------+
+1 row in set (0.00 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_we10 |
++----------------+
+| college        |
+| counting       |
+| eb             |
+| hostel         |
+| ki             |
+| library        |
+| pg             |
+| timetable      |
++----------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from ki;
++--------------+------------------+---------+-----------+---------+
+| enrollment   | course           | Fee     | name      | gst     |
++--------------+------------------+---------+-----------+---------+
+|            1 | java             |   30000 | Mr.SS     |   45000 |
+|            2 | java             |   30054 | Kritika   |   45081 |
+|            3 | python           |   30324 | Raushani  |   45486 |
+|            4 | Web designing    |   28888 | Tarun     |   43332 |
+| 111111111111 | Eithical hacking |   21000 | Dhananjay |       0 |
+| 111111111112 | LFT              | 2100090 | Sumit     | 2478100 |
++--------------+------------------+---------+-----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> truncate ki;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from ki;
+Empty set (0.00 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_we10 |
++----------------+
+| college        |
+| counting       |
+| eb             |
+| hostel         |
+| ki             |
+| library        |
+| pg             |
+| timetable      |
++----------------+
+8 rows in set (0.00 sec)
+
+mysql> drop table ki;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_we10 |
++----------------+
+| college        |
+| counting       |
+| eb             |
+| hostel         |
+| library        |
+| pg             |
+| timetable      |
++----------------+
+7 rows in set (0.00 sec)
+
+mysql>
